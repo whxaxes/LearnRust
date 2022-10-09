@@ -75,20 +75,20 @@ impl LRUCache {
         }
 
         // 检查 map 大小，如果 map 大小超过 cap ，将尾部删掉
-        self.check_and_delete_last();
+        if self.map.len() as i32 > self.capacity {
+            self.delete_last();
+        }
     }
 
-    fn check_and_delete_last(&mut self) {
-        if self.map.len() as i32 > self.capacity {
-            if let Some(last_node) = self.last.take() {
-                // 从 map 中删掉
-                self.map.remove(&last_node.borrow().key);
+    fn delete_last(&mut self) {
+        if let Some(last_node) = self.last.take() {
+            // 从 map 中删掉
+            self.map.remove(&last_node.borrow().key);
 
-                // 将 last_node.prev 改为新的 last_node
-                if let Some(new_last_node) = last_node.borrow_mut().prev.clone() {
-                    new_last_node.borrow_mut().next = None;
-                    self.last = Some(new_last_node);
-                }
+            // 将 last_node.prev 改为新的 last_node
+            if let Some(new_last_node) = last_node.borrow_mut().prev.clone() {
+                new_last_node.borrow_mut().next = None;
+                self.last = Some(new_last_node);
             }
         }
     }
