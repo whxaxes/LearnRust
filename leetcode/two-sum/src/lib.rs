@@ -1,16 +1,14 @@
+// https://leetcode.cn/problems/two-sum/
 pub fn two_sum(nums: Vec<i32>, target: i32) -> Vec<i32> {
-    let mut result: Vec<i32> = Vec::new();
-    'outer: for i in 0..nums.len() {
+    for i in 0..nums.len() {
         let c = target - nums[i];
         for j in 0..i {
             if nums[j] == c {
-                result.push(j as i32);
-                result.push(i as i32);
-                break 'outer;
+                return vec![ j as i32, i as i32 ];
             }
         }
     }
-    result
+    vec![]
 }
 
 #[cfg(test)]
