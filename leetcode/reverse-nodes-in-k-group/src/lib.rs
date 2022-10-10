@@ -1,23 +1,6 @@
+use reverse_linked_list::util::ListNode;
+
 pub struct Solution {}
-
-// Definition for singly-linked list.
-#[derive(PartialEq, Eq, Clone, Debug)]
-pub struct ListNode {
-  pub val: i32,
-  pub next: Option<Box<ListNode>>
-}
-
-
-impl ListNode {
-  #[inline]
-  fn new(val: i32) -> Self {
-    ListNode {
-      next: None,
-      val
-    }
-  }
-}
-
 
 fn reverse_node(head: Option<Box<ListNode>>, k: i32, in_depth: bool) -> Option<Box<ListNode>> {
   let mut new_head: Option<Box<ListNode>> = None;
@@ -66,9 +49,6 @@ impl Solution {
     }
 }
 
-
-
-
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -76,30 +56,8 @@ mod tests {
     #[test]
     fn it_works() {
         fn test_fn(call_list: Vec<i32>, k: i32) -> Vec<i32> {
-          let mut head: Option<Box<ListNode>> = None;
-          let mut result: Vec<i32> = Vec::new();
-
-          // 生成链表
-          for i in 0..call_list.len() {
-            let v = call_list.get(call_list.len() - i - 1).unwrap();
-            let mut n = Box::new(ListNode::new(*v));
-            if let Some(head_node) = head {
-              n.next = Some(head_node);
-            }
-
-            head = Some(n);
-          }
-
-          let mut new_head = Solution::reverse_k_group(head, k);
-
-          // 序列化链表
-          let mut curr = new_head.as_mut();
-          while let Some(h) = curr {
-            result.push(h.val);
-            curr = h.next.as_mut();
-          }
-
-          result
+          let head = ListNode::convert_vec_to_node(call_list);
+          ListNode::convert_node_to_vec(Solution::reverse_k_group(head, k))
         }
 
         assert_eq!(
