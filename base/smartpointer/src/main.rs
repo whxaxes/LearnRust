@@ -63,13 +63,13 @@ fn test_cell() {
     println!("{:?}, {:?}", b, a.get());
 
     let d = Rc::new(RefCell::new(String::from("123123")));
-    let e = Rc::clone(&d);
+    let e = d.clone();
 
     e.borrow_mut().push_str("6666");
     d.borrow_mut().push_str("string");
     d.borrow_mut().push_str("stringa");
 
-    println!("{}", d.borrow_mut());
+    println!("{:?}", d);
 
     log();
 }

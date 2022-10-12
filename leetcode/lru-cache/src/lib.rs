@@ -8,7 +8,7 @@ type PureLink = Rc<RefCell<LRUNode>>;
 type Link = Option<PureLink>;
 
 pub struct LRUCache {
-    map: HashMap<i32, Rc<RefCell<LRUNode>>>,
+    map: HashMap<i32, PureLink>,
     head: Link,
     last: Link,
     capacity: i32,
