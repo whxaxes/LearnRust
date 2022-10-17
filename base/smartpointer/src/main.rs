@@ -1,22 +1,14 @@
 use std::rc::Rc;
 use std::cell::{ Cell, RefCell };
+use global_util::TestUtil;
 
 fn main() {
-    test_box();
-    test_rc();
-    test_cell();
-}
-
-fn info(str: String) -> Box<dyn Fn()> {
-    println!("\n========={} start=========", str);
-    return Box::new(move || {
-        println!("========={} end=========\n", str);
-    });
+    TestUtil::wrap_with_label("test_box", test_box);
+    TestUtil::wrap_with_label("test_rc", test_rc);
+    TestUtil::wrap_with_label("test_cell", test_cell);
 }
 
 fn test_box() {
-    let log = info(String::from("test_box"));
-
     let a = Box::new(2);
     let b = *a + 1;
     println!("{:?}", b);
@@ -35,12 +27,9 @@ fn test_box() {
     (*arr3)[1] = 1;
 
     println!("{:?}, {:?}", arr3[0], arr3[1]);
-    log();
 }
 
 fn test_rc() {
-    let log = info(String::from("test_rc"));
-
     let a = Rc::new(String::from("123123"));
     println!("a count {:?}", Rc::strong_count(&a));
 
@@ -51,12 +40,9 @@ fn test_rc() {
 
     let c = Rc::clone(&a);
     println!("c count {:?}", Rc::strong_count(&c));
-
-    log();
 }
 
 fn test_cell() {
-    let log = info(String::from("test_cell"));
     let a = Cell::new(1);
     let b = a.get();
     a.set(2);
@@ -70,6 +56,4 @@ fn test_cell() {
     d.borrow_mut().push_str("stringa");
 
     println!("{:?}", d);
-
-    log();
 }

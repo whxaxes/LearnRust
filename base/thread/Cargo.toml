@@ -1,9 +1,11 @@
 [package]
-name = "smartpointer"
+name = "thread"
 version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+thread_local = "1.1"
 global_util = { path = "../../global_util" }
+flume = "0.10.14"
